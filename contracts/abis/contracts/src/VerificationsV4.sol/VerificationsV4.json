@@ -1,0 +1,14 @@
+[
+  "error FidMustBeNonZero(uint256)",
+  "error InputArraysMustHaveTheSameLength(uint256,uint256)",
+  "event GetFid(address indexed,uint256 indexed)",
+  "function WRITER_ROLE() view returns (bytes32)",
+  "function deleteVerification(address)",
+  "function deleteVerifications(address[])",
+  "function getFid(address) view returns (uint256)",
+  "function getFidWithEvent(address) returns (uint256)",
+  "function getFids(address[]) view returns (uint256[])",
+  "function setVerification(address,uint256)",
+  "function setVerifications(tuple(address,uint256)[])",
+  "function updateVerificationsInBulk(tuple(address,uint256)[],address[])"
+]

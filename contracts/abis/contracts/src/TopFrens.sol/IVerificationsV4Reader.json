@@ -1,0 +1,5 @@
+[
+  "function getFid(address) view returns (uint256)",
+  "function getFidWithEvent(address) returns (uint256)",
+  "function getFids(address[]) view returns (uint256[])"
+]
