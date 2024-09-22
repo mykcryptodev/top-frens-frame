@@ -1,0 +1,566 @@
+export const abi = [
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_verificationsV4Reader",
+        type: "address",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  { inputs: [], name: "MaxTopFrensReached", type: "error" },
+  { inputs: [], name: "NotAuthorized", type: "error" },
+  {
+    inputs: [{ internalType: "address", name: "owner", type: "address" }],
+    name: "OwnableInvalidOwner",
+    type: "error",
+  },
+  {
+    inputs: [{ internalType: "address", name: "account", type: "address" }],
+    name: "OwnableUnauthorizedAccount",
+    type: "error",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "userFid",
+        type: "uint256",
+      },
+    ],
+    name: "AllTopFrensRemoved",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "newMaxTopFrens",
+        type: "uint256",
+      },
+    ],
+    name: "MaxTopFrensUpdated",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "userFid",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "topFrenFid",
+        type: "uint256",
+      },
+    ],
+    name: "TopFrenAdded",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "userFid",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "topFrenFid",
+        type: "uint256",
+      },
+    ],
+    name: "TopFrenRemoved",
+    type: "event",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "user", type: "address" },
+      { internalType: "address", name: "topFren", type: "address" },
+    ],
+    name: "addTopFrenByAddress",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "user", type: "address" },
+      { internalType: "uint256", name: "topFrenFid", type: "uint256" },
+    ],
+    name: "addTopFrenByAddressAndFid",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "userFid", type: "uint256" },
+      { internalType: "uint256", name: "topFrenFid", type: "uint256" },
+    ],
+    name: "addTopFrenByFid",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "userFid", type: "uint256" },
+      { internalType: "address", name: "topFren", type: "address" },
+    ],
+    name: "addTopFrenByFidAndAddress",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "topFren", type: "address" }],
+    name: "addTopFrenByMsgSenderAndAddress",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "topFrenFid", type: "uint256" }],
+    name: "addTopFrenByMsgSenderAndFid",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "user", type: "address" },
+      { internalType: "address[]", name: "topFrensToAdd", type: "address[]" },
+    ],
+    name: "addTopFrensByAddress",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "userFid", type: "uint256" },
+      { internalType: "uint256[]", name: "topFrenFids", type: "uint256[]" },
+    ],
+    name: "addTopFrensByFid",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address[]", name: "topFrensToAdd", type: "address[]" },
+    ],
+    name: "addTopFrensByMsgSenderAndAddresses",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256[]", name: "topFrenFids", type: "uint256[]" },
+    ],
+    name: "addTopFrensByMsgSenderAndFids",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "verifier", type: "address" }],
+    name: "getFid",
+    outputs: [{ internalType: "uint256", name: "fid", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "verifier", type: "address" }],
+    name: "getFidWithEvent",
+    outputs: [{ internalType: "uint256", name: "fid", type: "uint256" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address[]", name: "verifiers", type: "address[]" },
+    ],
+    name: "getFids",
+    outputs: [{ internalType: "uint256[]", name: "fid", type: "uint256[]" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "topFren", type: "address" }],
+    name: "getTopFrenListers",
+    outputs: [{ internalType: "uint256[]", name: "", type: "uint256[]" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "topFrenFid", type: "uint256" }],
+    name: "getTopFrenListersByFid",
+    outputs: [{ internalType: "uint256[]", name: "", type: "uint256[]" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getTopFrensByMsgSender",
+    outputs: [{ internalType: "uint256[]", name: "", type: "uint256[]" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "user", type: "address" }],
+    name: "getTopFrensFidsByAddress",
+    outputs: [{ internalType: "uint256[]", name: "", type: "uint256[]" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "fid", type: "uint256" }],
+    name: "getTopFrensFidsByFid",
+    outputs: [{ internalType: "uint256[]", name: "", type: "uint256[]" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "maxTopFrens",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "user", type: "address" }],
+    name: "removeAllTopFrensByAddresses",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "userFid", type: "uint256" }],
+    name: "removeAllTopFrensByFids",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "removeAllTopFrensByMsgSenderAndAddresses",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "removeAllTopFrensByMsgSenderAndFids",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "user", type: "address" },
+      { internalType: "address", name: "topFren", type: "address" },
+    ],
+    name: "removeTopFrenByAddress",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "user", type: "address" },
+      { internalType: "uint256", name: "topFrenFid", type: "uint256" },
+    ],
+    name: "removeTopFrenByAddressAndFid",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "userFid", type: "uint256" },
+      { internalType: "uint256", name: "topFrenFid", type: "uint256" },
+    ],
+    name: "removeTopFrenByFid",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "userFid", type: "uint256" },
+      { internalType: "address", name: "topFren", type: "address" },
+    ],
+    name: "removeTopFrenByFidAndAddress",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "topFren", type: "address" }],
+    name: "removeTopFrenByMsgSenderAndAddress",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "topFrenFid", type: "uint256" }],
+    name: "removeTopFrenByMsgSenderAndFid",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "user", type: "address" },
+      {
+        internalType: "address[]",
+        name: "topFrensToRemove",
+        type: "address[]",
+      },
+    ],
+    name: "removeTopFrensByAddress",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "user", type: "address" },
+      { internalType: "uint256[]", name: "topFrenFids", type: "uint256[]" },
+    ],
+    name: "removeTopFrensByAddressAndFids",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "userFid", type: "uint256" },
+      { internalType: "uint256[]", name: "topFrenFids", type: "uint256[]" },
+    ],
+    name: "removeTopFrensByFid",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address[]",
+        name: "topFrensToRemove",
+        type: "address[]",
+      },
+    ],
+    name: "removeTopFrensByMsgSenderAndAddress",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256[]", name: "topFrenFids", type: "uint256[]" },
+    ],
+    name: "removeTopFrensByMsgSenderAndFids",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "user", type: "address" },
+      { internalType: "address", name: "topFrenToRemove", type: "address" },
+      { internalType: "address", name: "topFrenToAdd", type: "address" },
+    ],
+    name: "replaceTopFrenByAddress",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "userFid", type: "uint256" },
+      { internalType: "uint256", name: "topFrenFidToRemove", type: "uint256" },
+      { internalType: "uint256", name: "topFrenFidToAdd", type: "uint256" },
+    ],
+    name: "replaceTopFrenByFid",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "topFrenToRemove", type: "address" },
+      { internalType: "address", name: "topFrenToAdd", type: "address" },
+    ],
+    name: "replaceTopFrenByMsgSenderAndAddress",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "topFrenFidToRemove", type: "uint256" },
+      { internalType: "uint256", name: "topFrenFidToAdd", type: "uint256" },
+    ],
+    name: "replaceTopFrenByMsgSenderAndFid",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "user", type: "address" },
+      {
+        internalType: "address[]",
+        name: "topFrensToRemove",
+        type: "address[]",
+      },
+      { internalType: "address[]", name: "topFrensToAdd", type: "address[]" },
+    ],
+    name: "replaceTopFrensByAddress",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "userFid", type: "uint256" },
+      {
+        internalType: "uint256[]",
+        name: "topFrenFidsToRemove",
+        type: "uint256[]",
+      },
+      {
+        internalType: "uint256[]",
+        name: "topFrenFidsToAdd",
+        type: "uint256[]",
+      },
+    ],
+    name: "replaceTopFrensByFid",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address[]",
+        name: "topFrensToRemove",
+        type: "address[]",
+      },
+      { internalType: "address[]", name: "topFrensToAdd", type: "address[]" },
+    ],
+    name: "replaceTopFrensByMsgSenderAndAddresses",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256[]",
+        name: "topFrenFidsToRemove",
+        type: "uint256[]",
+      },
+      {
+        internalType: "uint256[]",
+        name: "topFrenFidsToAdd",
+        type: "uint256[]",
+      },
+    ],
+    name: "replaceTopFrensByMsgSenderAndFids",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "_maxTopFrens", type: "uint256" },
+    ],
+    name: "setMaxTopFrens",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "fid", type: "uint256" },
+      { internalType: "uint256", name: "", type: "uint256" },
+    ],
+    name: "topFrens",
+    outputs: [
+      { internalType: "uint256", name: "topFrenFids", type: "uint256" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "verificationsV4Reader",
+    outputs: [
+      {
+        internalType: "contract IVerificationsV4Reader",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+] as const;
