@@ -25,12 +25,6 @@ const frames = createFrames({
 });
 
 const handleRequest = frames(async (ctx) => {
-  console.log({
-    ctx: ctx.message?.action.interactor,
-    requesterFid: ctx.message?.requesterFid,
-    action : ctx.searchParams.action,
-    input: ctx.message?.action.input?.text,
-  });
   const action = ctx.searchParams.action;
   const inputText = ctx.message?.action.input?.text;
   const userFid = ctx.message?.action.interactor.fid;
@@ -63,10 +57,10 @@ const handleRequest = frames(async (ctx) => {
   }
 
   const getTextInput = () => {
-    if (userFid && action === "add") {
+    if (userFid && (action === "add" || action === "submit-add")) {
       return "Username or basename.base.eth";
     }
-    if (userFid && action === "remove") {
+    if (userFid && (action === "remove" || action === "submit-remove")) {
       return "Enter fren's number to remove";
     }
     return undefined;
@@ -84,7 +78,7 @@ const handleRequest = frames(async (ctx) => {
         <Button action="post">Share</Button>,
       ];
     }
-    if (userFid && action === "add") {
+    if (userFid && (action === "add" || action === "submit-add")) {
       return [
         <Button
           action="post"
@@ -101,7 +95,7 @@ const handleRequest = frames(async (ctx) => {
         </Button>,
       ];
     }
-    if (userFid && action === "remove") {
+    if (userFid && (action === "remove" || action === "submit-remove")) {
       return [
         <Button
           action="post"
@@ -140,12 +134,12 @@ const handleRequest = frames(async (ctx) => {
   };
 
   const getFrenName = (name: string, index: number) => {
-    const truncateCount = action === "remove" ? 6 : 10;
+    const truncateCount = (action === "remove" || action === "submit-remove") ? 6 : 10;
     const truncatedName =
       name.length > truncateCount
         ? name.slice(0, truncateCount - 3) + "..."
         : name;
-    if (action === "remove") {
+    if (action === "remove" || action === "submit-remove") {
       return `${index + 1}: ${truncatedName}`;
     }
     return truncatedName;
