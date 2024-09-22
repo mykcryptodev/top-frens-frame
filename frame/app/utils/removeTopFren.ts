@@ -1,26 +1,25 @@
-
-import { abi } from "../abi/topfrens";
-import { createWalletClient, http } from "viem";
 import { baseSepolia } from "viem/chains";
 import { CONTRACT_ADDRESS } from ".";
-import { privateKeyToAccount } from 'viem/accounts'
-
-const account = privateKeyToAccount(process.env.PRIVATE_KEY! as `0x${string}`);
-const viemClient = createWalletClient({
-  account,
-  chain: baseSepolia,
-  transport: http()
-});
 
 export const removeTopFren = async (userFid: number, frenToRemoveFid: number) => {
-  console.log("we are writing...")
-  const hash = await viemClient.writeContract({
-    address: CONTRACT_ADDRESS,
-    abi,
-    functionName: "removeTopFrenByFid",
-    args: [BigInt(userFid), BigInt(frenToRemoveFid)]
-  });
-  console.log("hash", hash);
+  void fetch(
+    `${process.env.ENGINE_URL!}/contract/${baseSepolia.id}/${CONTRACT_ADDRESS}/write`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.ENGINE_ACCESS_TOKEN!}`,
+        "x-backend-wallet-address": `${process.env.ENGINE_WALLET_ADDRESS!}`,
+      },
+      body: JSON.stringify({
+        functionName: "removeTopFrenByFid",
+        args: [
+          userFid,
+          frenToRemoveFid
+        ],
+      }),
+    },
+  );
 };
 
 export default removeTopFren;
