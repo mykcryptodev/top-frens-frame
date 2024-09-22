@@ -89,11 +89,11 @@ contract TopFrensTest is Test {
         assertEq(frens[0], 3);
     }
 
-    function test_removeAllTopFrensByAddress() public {
+    function test_removeAllTopFrensByAddresses() public {
         vm.startPrank(user1);
         topFrens.addTopFrenByAddress(user1, user2);
         topFrens.addTopFrenByAddress(user1, user3);
-        topFrens.removeAllTopFrensByAddress(user1);
+        topFrens.removeAllTopFrensByAddresses(user1);
         vm.stopPrank();
         
         uint256[] memory frens = topFrens.getTopFrensFidsByAddress(user1);

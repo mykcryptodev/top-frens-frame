@@ -29,6 +29,31 @@ contract TopFrens is Ownable {
         verificationsV4Reader = IVerificationsV4Reader(_verificationsV4Reader);
     }
 
+    function addTopFrenByMsgSenderAndAddress(address topFren) public {
+        uint256 userFid = verificationsV4Reader.getFid(msg.sender);
+        uint256 topFrenFid = verificationsV4Reader.getFid(topFren);
+        _addTopFren(userFid, topFrenFid);
+    }
+
+    function addTopFrenByMsgSenderAndFid(uint256 topFrenFid) public {
+        uint256 userFid = verificationsV4Reader.getFid(msg.sender);
+        _addTopFren(userFid, topFrenFid);
+    }
+
+    function addTopFrensByMsgSenderAndAddresses(address[] calldata topFrensToAdd) public {
+        uint256 userFid = verificationsV4Reader.getFid(msg.sender);
+        uint256[] memory topFrenFids = new uint256[](topFrensToAdd.length);
+        for (uint256 i = 0; i < topFrensToAdd.length; i++) {
+            topFrenFids[i] = verificationsV4Reader.getFid(topFrensToAdd[i]);
+        }
+        _addTopFrens(userFid, topFrenFids);
+    }
+
+    function addTopFrensByMsgSenderAndFids(uint256[] calldata topFrenFids) public {
+        uint256 userFid = verificationsV4Reader.getFid(msg.sender);
+        _addTopFrens(userFid, topFrenFids);
+    }
+
     function addTopFrenByAddress(address user, address topFren) public {
         uint256 userFid = verificationsV4Reader.getFid(user);
         uint256 topFrenFid = verificationsV4Reader.getFid(topFren);
@@ -85,6 +110,31 @@ contract TopFrens is Ownable {
             topFrens[userFid].push(topFrenFids[i]);
             emit TopFrenAdded(userFid, topFrenFids[i]);
         }
+    }
+
+    function removeTopFrenByMsgSenderAndAddress(address topFren) public {
+        uint256 userFid = verificationsV4Reader.getFid(msg.sender);
+        uint256 topFrenFid = verificationsV4Reader.getFid(topFren);
+        _removeTopFren(userFid, topFrenFid);
+    }
+
+    function removeTopFrenByMsgSenderAndFid(uint256 topFrenFid) public {
+        uint256 userFid = verificationsV4Reader.getFid(msg.sender);
+        _removeTopFren(userFid, topFrenFid);
+    }
+
+    function removeTopFrensByMsgSenderAndAddress(address[] calldata topFrensToRemove) public {
+        uint256 userFid = verificationsV4Reader.getFid(msg.sender);
+        uint256[] memory topFrenFids = new uint256[](topFrensToRemove.length);
+        for (uint256 i = 0; i < topFrensToRemove.length; i++) {
+            topFrenFids[i] = verificationsV4Reader.getFid(topFrensToRemove[i]);
+        }
+        _removeTopFrens(userFid, topFrenFids);
+    }
+
+    function removeTopFrensByMsgSenderAndFids(uint256[] calldata topFrenFids) public {
+        uint256 userFid = verificationsV4Reader.getFid(msg.sender);
+        _removeTopFrens(userFid, topFrenFids);
     }
 
     function removeTopFrenByAddress(address user, address topFren) public {
@@ -169,12 +219,22 @@ contract TopFrens is Ownable {
         }
     }
 
-    function removeAllTopFrensByAddress(address user) public {
+    function removeAllTopFrensByMsgSenderAndAddresses() public {
+        uint256 userFid = verificationsV4Reader.getFid(msg.sender);
+        _removeAllTopFrens(userFid);
+    }
+
+    function removeAllTopFrensByMsgSenderAndFids() public {
+        uint256 userFid = verificationsV4Reader.getFid(msg.sender);
+        _removeAllTopFrens(userFid);
+    }
+
+    function removeAllTopFrensByAddresses(address user) public {
         uint256 userFid = verificationsV4Reader.getFid(user);
         _removeAllTopFrens(userFid);
     }
 
-    function removeAllTopFrensByFid(uint256 userFid) public {
+    function removeAllTopFrensByFids(uint256 userFid) public {
         _removeAllTopFrens(userFid);
     }
 
@@ -188,6 +248,99 @@ contract TopFrens is Ownable {
         }
         delete topFrens[userFid];
         emit AllTopFrensRemoved(userFid);
+    }
+
+    function replaceTopFrenByMsgSenderAndAddress(address topFrenToRemove, address topFrenToAdd) public {
+        uint256 userFid = verificationsV4Reader.getFid(msg.sender);
+        uint256 topFrenFidToRemove = verificationsV4Reader.getFid(topFrenToRemove);
+        uint256 topFrenFidToAdd = verificationsV4Reader.getFid(topFrenToAdd);
+        _replaceTopFren(userFid, topFrenFidToRemove, topFrenFidToAdd);
+    }
+
+    function replaceTopFrenByMsgSenderAndFid(uint256 topFrenFidToRemove, uint256 topFrenFidToAdd) public {
+        uint256 userFid = verificationsV4Reader.getFid(msg.sender);
+        _replaceTopFren(userFid, topFrenFidToRemove, topFrenFidToAdd);
+    }
+
+    function replaceTopFrenByAddress(address user, address topFrenToRemove, address topFrenToAdd) public {
+        uint256 userFid = verificationsV4Reader.getFid(user);
+        uint256 topFrenFidToRemove = verificationsV4Reader.getFid(topFrenToRemove);
+        uint256 topFrenFidToAdd = verificationsV4Reader.getFid(topFrenToAdd);
+        _replaceTopFren(userFid, topFrenFidToRemove, topFrenFidToAdd);
+    }
+
+    function replaceTopFrenByFid(uint256 userFid, uint256 topFrenFidToRemove, uint256 topFrenFidToAdd) public {
+        _replaceTopFren(userFid, topFrenFidToRemove, topFrenFidToAdd);
+    }
+
+    function replaceTopFrensByMsgSenderAndAddresses(address[] calldata topFrensToRemove, address[] calldata topFrensToAdd) public {
+        uint256 userFid = verificationsV4Reader.getFid(msg.sender);
+        uint256[] memory topFrenFidsToRemove = new uint256[](topFrensToRemove.length);
+        for (uint256 i = 0; i < topFrensToRemove.length; i++) {
+            topFrenFidsToRemove[i] = verificationsV4Reader.getFid(topFrensToRemove[i]);
+        }
+        uint256[] memory topFrenFidsToAdd = new uint256[](topFrensToAdd.length);
+        for (uint256 i = 0; i < topFrensToAdd.length; i++) {
+            topFrenFidsToAdd[i] = verificationsV4Reader.getFid(topFrensToAdd[i]);
+        }
+        _replaceTopFrens(userFid, topFrenFidsToRemove, topFrenFidsToAdd);
+    }
+
+    function replaceTopFrensByMsgSenderAndFids(uint256[] calldata topFrenFidsToRemove, uint256[] calldata topFrenFidsToAdd) public {
+        uint256 userFid = verificationsV4Reader.getFid(msg.sender);
+        _replaceTopFrens(userFid, topFrenFidsToRemove, topFrenFidsToAdd);
+    }
+
+    function replaceTopFrensByAddress(address user, address[] calldata topFrensToRemove, address[] calldata topFrensToAdd) public {
+        uint256 userFid = verificationsV4Reader.getFid(user);
+        uint256[] memory topFrenFidsToRemove = new uint256[](topFrensToRemove.length);
+        for (uint256 i = 0; i < topFrensToRemove.length; i++) {
+            topFrenFidsToRemove[i] = verificationsV4Reader.getFid(topFrensToRemove[i]);
+        }
+        uint256[] memory topFrenFidsToAdd = new uint256[](topFrensToAdd.length);
+        for (uint256 i = 0; i < topFrensToAdd.length; i++) {
+            topFrenFidsToAdd[i] = verificationsV4Reader.getFid(topFrensToAdd[i]);
+        }
+        _replaceTopFrens(userFid, topFrenFidsToRemove, topFrenFidsToAdd);
+    }
+
+    function replaceTopFrensByFid(uint256 userFid, uint256[] calldata topFrenFidsToRemove, uint256[] calldata topFrenFidsToAdd) public {
+        _replaceTopFrens(userFid, topFrenFidsToRemove, topFrenFidsToAdd);
+    }
+
+    function _replaceTopFrens(uint256 userFid, uint256[] memory topFrenFidsToRemove, uint256[] memory topFrenFidsToAdd) internal {
+        if (msg.sender != owner() && verificationsV4Reader.getFid(msg.sender) != userFid) {
+            revert NotAuthorized();
+        }
+        
+        // Remove frens
+        for (uint256 i = 0; i < topFrenFidsToRemove.length; i++) {
+            _removeTopFren(userFid, topFrenFidsToRemove[i]);
+        }
+        
+        // Check if adding new frens would exceed the limit
+        if (topFrens[userFid].length + topFrenFidsToAdd.length > maxTopFrens) {
+            revert MaxTopFrensReached();
+        }
+        
+        // Add new frens
+        for (uint256 i = 0; i < topFrenFidsToAdd.length; i++) {
+            _addTopFren(userFid, topFrenFidsToAdd[i]);
+        }
+    }
+
+    function _replaceTopFren(uint256 userFid, uint256 topFrenFidToRemove, uint256 topFrenFidToAdd) internal {
+        if (msg.sender != owner() && verificationsV4Reader.getFid(msg.sender) != userFid) {
+            revert NotAuthorized();
+        }
+        
+        _removeTopFren(userFid, topFrenFidToRemove);
+        _addTopFren(userFid, topFrenFidToAdd);
+    }
+
+    function getTopFrensByMsgSender() public view returns (uint256[] memory) {
+        uint256 userFid = verificationsV4Reader.getFid(msg.sender);
+        return topFrens[userFid];
     }
 
     function getTopFrensFidsByFid(uint256 fid) public view returns (uint256[] memory) {
