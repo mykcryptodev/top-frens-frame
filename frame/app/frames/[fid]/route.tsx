@@ -84,7 +84,7 @@ const handleRequest = frames(async (ctx) => {
         </Button>,
         <Button 
           action="link"
-          target={`https://warpcast.com/~/compose?text=Hello%20world!&embeds[]=${encodeURIComponent(createExampleURL(`/frames/${userFid}`))}`}
+          target={`https://warpcast.com/~/compose?text=My%20top%208!%0A%0A%0Acopy%20paste%20this%20url%20into%20the%20custom%20frame%20url%20input%20if%20you%20want%20to%20add%20it%20to%20your%20basename%20profile%21%0A${encodeURIComponent(createExampleURL(`/frames?fid=${userFid}`))}&embeds[]=${encodeURIComponent(createExampleURL(`/frames?fid=${userFid}`))}`}
         >
           Share
         </Button>,
