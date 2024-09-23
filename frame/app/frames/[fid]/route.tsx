@@ -100,7 +100,7 @@ const handleRequest = frames(async (ctx) => {
             },
           }}
         >
-          Go Back
+          Go back
         </Button>,
         <Button action="post" target={{ query: { action: "submit-add" } }}>
           Add
@@ -117,7 +117,7 @@ const handleRequest = frames(async (ctx) => {
             },
           }}
         >
-          Go Back
+          Go back
         </Button>,
         <Button
           action="post"
@@ -140,7 +140,7 @@ const handleRequest = frames(async (ctx) => {
           },
         }}
       >
-        Choose My Top 8
+        Choose my top 8
       </Button>,
     ];
   };
