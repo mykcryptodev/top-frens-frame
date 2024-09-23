@@ -178,7 +178,7 @@ const handleRequest = frames(async (ctx) => {
             style={{ fontWeight: 700 }}
           >
             {user.username.charAt(0).toUpperCase() + user.username.slice(1)}'s
-            Fren Space
+            Top 8 Fren Space
           </div>
           <div tw="flex w-full justify-around">
             {topFrens.slice(0, 4).map((fren, index) => (
